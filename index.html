@@ -1,124 +1,262 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>林 · 個人履歴書</title>
-  <style>
-    body {font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; margin:0;background:#f5f7fb;color:#1f2937;line-height:1.6}
-    header {background:#213044;color:#fff;padding:48px 20px;text-align:center}
-    header h1{margin:0 0 6px;font-size:40px}
-    header p{margin:0;color:#d1d5db}
-    main{max-width:960px;margin:28px auto;padding:0 16px}
-    .card{background:#fff;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:22px;margin-bottom:18px;border:1px solid #e5e7eb}
-    h2{font-size:20px;margin:0 0 12px;border-bottom:2px solid #e5e7eb;padding-bottom:8px}
-    .item{margin-bottom:18px}
-    .item h3{margin:0 0 6px;font-size:16px;color:#213044}
-    ul{margin:6px 0 0;padding:0 0 0 18px}
-    .muted{color:#6b7280}
-    footer{text-align:center;color:#9ca3af;font-size:13px;margin:24px 0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>林 · 個人履歴書</title>
+    <style>
+        /* ===== 基础配色 & 重置 ===== */
+        :root{
+            --bg-grad-start:#1e293b; /* 比原来浅的深蓝灰 */
+            --bg-grad-end:#334155;   /* 蓝灰色，整体亮一些 */
+            --card:#162032cc;        /* 保持半透明卡片 */
+            --ink:#e5e7eb;
+            --muted:#a5b4fc;
+            --pri:#3b82f6;
+            --accent:#06b6d4;
+            --line:#334155;
+            --glow:#3b82f644;
+        }
+        *{box-sizing:border-box}
+        html,body{margin:0;padding:0}
+        body{
+            font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans JP",sans-serif;
+            background: linear-gradient(135deg,var(--bg-grad-start),var(--bg-grad-end)) fixed;
+            color: var(--ink);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a{color:var(--pri);text-decoration:none}
+        a:hover{text-decoration:underline}
+
+        /* ===== 头部 ===== */
+        header{
+            padding: 72px 20px 96px;
+            text-align:center;
+            background:
+                    radial-gradient(800px 400px at 50% -10%, var(--glow), transparent 70%),
+                    radial-gradient(600px 300px at 80% 0%, #22d3ee33, transparent 60%);
+        }
+        header h1{
+            margin:0 0 10px;
+            font-size: clamp(36px,5vw,56px);
+            letter-spacing: .5px;
+        }
+        header p{
+            margin:0;
+            color: var(--muted);
+            font-size: clamp(14px,2.6vw,18px);
+        }
+
+        /* ===== 主体容器 ===== */
+        main{max-width:1000px;margin:-48px auto 40px;padding:0 18px}
+
+        /* ===== 卡片（玻璃拟态） ===== */
+        .card{
+            background: var(--card);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 26px 28px;
+            margin-bottom: 22px;
+            box-shadow:
+                    0 10px 30px rgba(0,0,0,.35),
+                    inset 0 1px 0 rgba(255,255,255,.06);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+        .card:hover{
+            transform: translateY(-4px);
+            border-color: #334155;
+            box-shadow:
+                    0 16px 42px rgba(0,0,0,.45),
+                    0 0 0 1px #334155 inset;
+        }
+
+        /* ===== 区块标题 ===== */
+        h2{
+            display:flex;align-items:center;gap:10px;
+            margin:0 0 14px;
+            font-size: 20px;
+            letter-spacing:.3px;
+        }
+        h2::before{
+            content:"";
+            width:8px;height:20px;border-radius:4px;
+            background: linear-gradient(180deg,var(--pri),var(--accent));
+            box-shadow: 0 0 12px var(--glow);
+        }
+
+        /* ===== 列表、细文字 ===== */
+        ul{margin:8px 0 0 1.2em;padding:0}
+        .muted{color:var(--muted)}
+
+        /* ===== 業務経歴：时间轴风格 ===== */
+        .timeline{position:relative;padding-left:20px}
+        .timeline::before{
+            content:"";
+            position:absolute;left:8px;top:0;bottom:0;
+            width:2px;background: linear-gradient(var(--line), #334155);
+            border-radius:1px;
+        }
+        .item{
+            position:relative;
+            padding-left:18px;
+            margin: 18px 0 22px;
+        }
+        .item::before{
+            content:"";
+            position:absolute;left:-1px;top:.2em;
+            width:12px;height:12px;border-radius:50%;
+            background: radial-gradient(circle at 35% 35%, #fff, var(--pri) 60%, #1d4ed8 100%);
+            box-shadow: 0 0 0 3px #0b1220, 0 0 16px var(--glow);
+        }
+        .item h3{
+            margin:0 0 6px;
+            font-size: 17px;
+            color:#dbeafe;
+            letter-spacing:.2px;
+        }
+        .item h3 .date{
+            font-weight:600;
+            color:#93c5fd;
+            padding:2px 8px;
+            border:1px solid #1e3a8a;
+            border-radius:999px;
+            background:#0b1220aa;
+            margin-right:8px;
+        }
+        .item p{margin:0 0 8px}
+        .item ul{margin-top:6px}
+
+        /* ===== 页脚 ===== */
+        footer{
+            text-align:center;
+            color:#94a3b8;
+            font-size:13px;
+            padding:28px 12px 40px;
+        }
+
+        /* ===== 自适应 ===== */
+        @media (max-width:640px){
+            .card{padding:20px}
+            .item h3{font-size:16px}
+        }
+    </style>
 </head>
 <body>
-  <header>
+<header>
     <h1>林志</h1>
     <p>エンジニア · Tokyo</p>
-  </header>
-  <main>
+</header>
+
+<main>
     <section class="card">
-      <h2>連絡先</h2>
-      <ul style="list-style:none;padding:0">
-        <li>Email：yourmail@gmail.com</li>
-        <li>GitHub：<a href="https://github.com/zlinJavaer">github.com/zlinJavaer</a></li>
-      </ul>
+        <h2>連絡先</h2>
+        <ul style="list-style:none;margin:0;padding:0">
+            <li>Email：zlin.jpit@gmail.com</li>
+            <li>GitHub：<a href="https://github.com/zlinJavaer">github.com/zlinJavaer</a></li>
+        </ul>
     </section>
 
     <section class="card">
-      <h2>スキル</h2>
-      <div>Java / Spring Boot / MyBatis / Hibernate / MySQL / MariaDB / IBM DB2 / Maven / Jenkins / Docker / AWS</div>
+        <h2>スキル</h2>
+        <div>Java / Spring Boot / MyBatis / Hibernate / MySQL / MariaDB / IBM DB2 / Maven / Jenkins / Docker / AWS</div>
     </section>
 
-    <section class="card">
-<h2>業務経歴</h2>
-<div class="item">
-<h3>2023-07　放送局向け新規CMS開発</h3>
-<p><strong>概要：</strong>TV放送局人員、グループ、コンテンツ管理システム開発</p>
-<p><strong>担当：</strong></p><ul>
-<li>グループAPI</li>
-<li>コンテンツAPI</li>
-<li>ユーザー履歴API</li>
-<li>記事タイプAPI</li>
-<li>ファイルセットなどのAPI製造実装</li>
-<li>試験項目表作成</li>
-<li>実施</li>
-<li>エビデンス作成</li>
-</ul>
-<p class="muted"><strong>環境：</strong>Java, MyBatis, Spring Boot, MariaDB</p>
-</div>
-<div class="item">
-<h3>2023-03　次期サポートシステム</h3>
-<p><strong>概要：</strong>証券会社基幹サポートシステムのエンハンスに参画し、証券会社コンプライアンスシステム運用・保守を経験。</p>
-<p><strong>担当：</strong></p><ul>
-<li>発注機能</li>
-<li>注文通知</li>
-<li>表示権限設定機能</li>
-<li>複数銘柄ファイル発注機能改修</li>
-<li>製造</li>
-<li>テスト</li>
-</ul>
-<p class="muted"><strong>環境：</strong>Java, JAVASCRIPT, Jquery, Junit, Spring Boot, Themeleaf, Sybase</p>
-</div>
-<div class="item">
-<h3>2022-06　会計システム再構築</h3>
-<p><strong>概要：</strong>不動産会社会計システム再構築プロジェクトに参画し、不動産会社会計システ業務を経験。</p>
-<p><strong>担当：</strong></p><ul>
-<li>現金出納</li>
-<li>勘定元張など転記機能作成</li>
-<li>仕訳入力機能改修</li>
-<li>可視化機能作成</li>
-<li>単体テスト(CASE作成込み）</li>
-</ul>
-<p class="muted"><strong>環境：</strong>Java, S2struts, s2dao, PL/SQL, html, css, Windows 10, PostgreSQL</p>
-</div>
-<div class="item">
-<h3>2021-12　ワインキャビネット管理システム</h3>
-<p><strong>概要：</strong>保管場所に現在ある商品を管理するシステムです。在庫一覧画面、入荷・出荷管理画面、在庫の検索などの開発</p>
-<p><strong>担当：</strong></p><ul>
-<li>詳細設計</li>
-<li>機能設計</li>
-<li>製造</li>
-<li>単体テスト（ケース作成と実施）</li>
-</ul>
-<p class="muted"><strong>環境：</strong>Java、SpringMVC, Jquery, DBUtils, HTML, CSS, Bootstrap, Win10, Oracle</p>
-</div>
-<div class="item">
-<h3>2021-04　在庫管理システム</h3>
-<p><strong>概要：</strong>製品や保管場所ごとに現在ある在庫数を管理するシステムです。在庫一覧画面、入荷・出荷管理画面などの開発</p>
-<p><strong>担当：</strong></p><ul>
-<li>詳細設計</li>
-<li>製造</li>
-<li>単体テスト（ケース作成と実施）</li>
-<li>結合テスト（実施）</li>
-</ul>
-<p class="muted"><strong>環境：</strong>JAVA、Spring  HTML3、CSS3、Oracle、Skape, Win10, Oracle</p>
-</div>
-<div class="item">
-<h3>2020-07　病院向け予約システム開発</h3>
-<p><strong>概要：</strong>詳細以降作業</p>
-<p><strong>担当：</strong></p><ul>
-<li>統計分析画面製造</li>
-<li>出勤シフト管理機能製造</li>
-<li>次回予約フォロー機能実装</li>
-<li>患者情報管理改修</li>
-<li>単体テスト仕様書作成・テスト実施・バグ対応</li>
-<li>【 チーム】：5名</li>
-</ul>
-<p class="muted"><strong>環境：</strong>JSP, Jquery, Ajax, Spring, Struts1, JDBCTemplate, A5M2, Win10, Oracle</p>
-</div>
-</section>
+    <section class="card timeline">
+        <h2>業務経歴</h2>
 
-  </main>
-  <footer>© 2025 林 · GitHub Pages</footer>
+        <div class="item">
+            <h3><span class="date">2023-07</span>放送局向け新規CMS開発</h3>
+            <p><strong>概要：</strong>TV放送局人員、グループ、コンテンツ管理システム開発</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>グループAPI</li>
+                <li>コンテンツAPI</li>
+                <li>ユーザー履歴API</li>
+                <li>記事タイプAPI</li>
+                <li>ファイルセットなどのAPI製造実装</li>
+                <li>試験項目表作成</li>
+                <li>実施</li>
+                <li>エビデンス作成</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>Java, MyBatis, Spring Boot, MariaDB</p>
+        </div>
+
+        <div class="item">
+            <h3><span class="date">2023-03</span>次期サポートシステム</h3>
+            <p><strong>概要：</strong>証券会社基幹サポートシステムのエンハンスに参画し、証券会社コンプライアンスシステム運用・保守を経験。</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>発注機能</li>
+                <li>注文通知</li>
+                <li>表示権限設定機能</li>
+                <li>複数銘柄ファイル発注機能改修</li>
+                <li>製造</li>
+                <li>テスト</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>Java, JAVASCRIPT, Jquery, Junit, Spring Boot, Themeleaf, Sybase</p>
+        </div>
+
+        <div class="item">
+            <h3><span class="date">2022-06</span>会計システム再構築</h3>
+            <p><strong>概要：</strong>不動産会社会計システム再構築プロジェクトに参画し、不動産会社会計システ業務を経験。</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>現金出納</li>
+                <li>勘定元張など転記機能作成</li>
+                <li>仕訳入力機能改修</li>
+                <li>可視化機能作成</li>
+                <li>単体テスト(CASE作成込み）</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>Java, S2struts, s2dao, PL/SQL, html, css, Windows 10, PostgreSQL</p>
+        </div>
+
+        <div class="item">
+            <h3><span class="date">2021-12</span>ワインキャビネット管理システム</h3>
+            <p><strong>概要：</strong>保管場所に現在ある商品を管理するシステムです。在庫一覧画面、入荷・出荷管理画面、在庫の検索などの開発</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>詳細設計</li>
+                <li>機能設計</li>
+                <li>製造</li>
+                <li>単体テスト（ケース作成と実施）</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>Java、SpringMVC, Jquery, DBUtils, HTML, CSS, Bootstrap, Win10, Oracle</p>
+        </div>
+
+        <div class="item">
+            <h3><span class="date">2021-04</span>在庫管理システム</h3>
+            <p><strong>概要：</strong>製品や保管場所ごとに現在ある在庫数を管理するシステムです。在庫一覧画面、入荷・出荷管理画面などの開発</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>詳細設計</li>
+                <li>製造</li>
+                <li>単体テスト（ケース作成と実施）</li>
+                <li>結合テスト（実施）</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>JAVA、Spring  HTML3、CSS3、Oracle、Skape, Win10, Oracle</p>
+        </div>
+
+        <div class="item">
+            <h3><span class="date">2020-07</span>病院向け予約システム開発</h3>
+            <p><strong>概要：</strong>詳細以降作業</p>
+            <p><strong>担当：</strong></p>
+            <ul>
+                <li>統計分析画面製造</li>
+                <li>出勤シフト管理機能製造</li>
+                <li>次回予約フォロー機能実装</li>
+                <li>患者情報管理改修</li>
+                <li>単体テスト仕様書作成・テスト実施・バグ対応</li>
+                <li>【 チーム】：5名</li>
+            </ul>
+            <p class="muted"><strong>環境：</strong>JSP, Jquery, Ajax, Spring, Struts1, JDBCTemplate, A5M2, Win10, Oracle</p>
+        </div>
+    </section>
+</main>
+
+<footer>© 2025 林 · GitHub Pages</footer>
 </body>
 </html>
